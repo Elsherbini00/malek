@@ -3,16 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وراء الكواليس 🎭✨</title>
-    <!-- استدعاء Tailwind CSS للتصميم -->
+
+    <!-- ===== SEO & Social Meta ===== -->
+    <title>وراء الكواليس | رحلتك في عالم المسرح 🎭</title>
+    <meta name="description" content="موقع تعليمي تفاعلي لعشاق المسرح: أساسيات الخشبة، أسرار التمثيل، ماستر كلاس، صناع السحر، ركن الأطفال، ومواقف مسرحية مضحكة.">
+    <meta name="keywords" content="المسرح, التمثيل, الإخراج, السينوغرافيا, وراء الكواليس, تمثيل للأطفال">
+    <meta name="author" content="وراء الكواليس">
+    <meta name="theme-color" content="#1a0b2e">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="وراء الكواليس 🎭">
+    <meta property="og:description" content="رحلتك الكاملة في عالم المسرح — من أول خطوة على الخشبة لحد ما تبقى نجم.">
+    <meta property="og:locale" content="ar_AR">
+
+    <!-- ===== Preconnect for faster external loads ===== -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+
+    <!-- ===== Fonts & Icons ===== -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- ===== Tailwind CSS ===== -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- استدعاء خطوط Google Fonts (Cairo & Tajawal) -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
-    <!-- استدعاء FontAwesome للأيقونات -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- استدعاء Animate.css للحركات الجاهزة -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
-    
+
+    <!-- ===== Animate.css (only used for entrance animations) ===== -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- ===== Favicon (inline SVG) ===== -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎭</text></svg>">
+
     <script>
         tailwind.config = {
             theme: {
@@ -31,39 +53,70 @@
                     animation: {
                         'bounce-slow': 'bounce 3s infinite',
                         'wiggle': 'wiggle 1s ease-in-out infinite',
-                        'curtain-raise': 'curtainRaise 3s ease-in-out forwards',
                     },
                     keyframes: {
                         wiggle: {
                             '0%, 100%': { transform: 'rotate(-3deg)' },
                             '50%': { transform: 'rotate(3deg)' },
                         },
-                        curtainRaise: {
-                            '0%': { height: '100vh' },
-                            '100%': { height: '0', display: 'none' },
-                        }
                     }
                 }
             }
         }
     </script>
+
     <style>
-        /* أنماط مخصصة */
+        /* ===== CSS Variables ===== */
+        :root {
+            --color-dark: #1a0b2e;
+            --color-red: #e63946;
+            --color-gold: #f4a261;
+            --color-light: #f1faee;
+            --color-blue: #457b9d;
+            --transition-cubic: cubic-bezier(0.77, 0, 0.175, 1);
+        }
+
+        /* ===== Base ===== */
+        html { scroll-behavior: smooth; scroll-padding-top: 90px; }
         body {
             font-family: 'Cairo', sans-serif;
             background-color: #f8f9fa;
+            color: #1f2937;
             overflow-x: hidden;
-            scroll-behavior: smooth;
         }
 
-        /* ستايل الستارة الافتتاحية */
-        #intro-curtain {
+        /* ===== Skip Link (a11y) ===== */
+        .skip-link {
+            position: absolute;
+            top: -100px;
+            right: 0;
+            background: var(--color-gold);
+            color: var(--color-dark);
+            padding: 12px 24px;
+            z-index: 10000;
+            font-weight: 700;
+            border-radius: 0 0 0 12px;
+            transition: top 0.3s;
+        }
+        .skip-link:focus { top: 0; }
+
+        /* ===== Scroll Progress Bar ===== */
+        #scroll-progress {
             position: fixed;
             top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background: linear-gradient(135deg, #800000, #ff0000); /* لون أحمر مخملي */
+            right: 0;
+            height: 4px;
+            width: 0%;
+            background: linear-gradient(to left, var(--color-red), var(--color-gold));
+            z-index: 9998;
+            transition: width 0.1s ease-out;
+        }
+
+        /* ===== Intro Curtain ===== */
+        #intro-curtain {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(135deg, #800000, #b30000);
             z-index: 9999;
             display: flex;
             justify-content: center;
@@ -71,7 +124,7 @@
             flex-direction: column;
             color: white;
             box-shadow: inset 0 -20px 50px rgba(0,0,0,0.5);
-            transition: transform 2s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: transform 2s var(--transition-cubic);
         }
 
         #intro-curtain::before, #intro-curtain::after {
@@ -82,105 +135,173 @@
             height: 100%;
             background: repeating-linear-gradient(to right, #800000, #800000 40px, #660000 40px, #660000 80px);
             box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
-            transition: transform 2s cubic-bezier(0.77, 0, 0.175, 1);
+            transition: transform 2s var(--transition-cubic);
+            pointer-events: none;
         }
+        #intro-curtain::before { left: 0; transform-origin: left top; }
+        #intro-curtain::after  { right: 0; transform-origin: right top; }
 
-        #intro-curtain::before {
-            left: 0;
-            transform-origin: left top;
-        }
-
-        #intro-curtain::after {
-            right: 0;
-            transform-origin: right top;
-        }
-
-        .curtain-open::before {
-            transform: scaleX(0);
-        }
-
-        .curtain-open::after {
-            transform: scaleX(0);
-        }
-        
-        .curtain-open .intro-content {
-            opacity: 0;
-            transform: translateY(-50px);
-            transition: all 1s;
-        }
+        .curtain-open { transform: scale(1.02); }
+        .curtain-open::before { transform: scaleX(0); }
+        .curtain-open::after  { transform: scaleX(0); }
+        .curtain-open .intro-content { opacity: 0; transform: translateY(-50px); transition: all 1s; pointer-events: none; }
 
         .intro-content {
             z-index: 10000;
             text-align: center;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            padding: 0 1rem;
         }
 
-        /* ستايلات الكروت والأقسام */
+        /* ===== Glass Cards ===== */
         .glass-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.3);
             box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
         }
-        
         .glass-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px 0 rgba(31, 38, 135, 0.25);
+            transform: translateY(-8px);
+            box-shadow: 0 18px 40px 0 rgba(31, 38, 135, 0.25);
         }
 
+        /* ===== Section Title ===== */
         .section-title {
             font-family: 'Tajawal', sans-serif;
             background: linear-gradient(to right, #e63946, #f4a261);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            color: transparent;
         }
 
-        /* زر الصعود لأعلى */
+        /* ===== Active Nav Link ===== */
+        .nav-link {
+            position: relative;
+            padding-bottom: 4px;
+            transition: color 0.25s;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-gold);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        .nav-link.active { color: var(--color-gold) !important; }
+
+        /* ===== Scroll To Top Button ===== */
         #scrollTopBtn {
             display: none;
             position: fixed;
-            bottom: 20px;
-            right: 30px;
-            z-index: 99;
+            bottom: 24px;
+            left: 24px;
+            z-index: 999;
             border: none;
             outline: none;
-            background-color: #e63946;
+            background-color: var(--color-red);
             color: white;
             cursor: pointer;
-            padding: 15px;
+            width: 52px;
+            height: 52px;
             border-radius: 50%;
             font-size: 18px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            transition: background-color 0.3s;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+            transition: background-color 0.3s, transform 0.3s;
         }
-        #scrollTopBtn:hover {
-            background-color: #f4a261;
-        }
+        #scrollTopBtn:hover { background-color: var(--color-gold); transform: translateY(-3px); }
 
-        /* لمسات مبهجة */
+        /* ===== Floating Emoji ===== */
         .emoji-float {
             display: inline-block;
             animation: float 3s ease-in-out infinite;
         }
         @keyframes float {
-            0% { transform: translateY(0px); }
+            0%, 100% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
         }
-        
+
+        /* ===== Spotlight Hero ===== */
         .spotlight-bg {
-            background: radial-gradient(circle at 50% 0%, #3a1c71, #d76d77, #ffaf7b);
+            background: radial-gradient(circle at 50% 0%, #3a1c71, #d76d77 55%, #ffaf7b);
             color: white;
+        }
+
+        /* ===== Quote Card (replaces the removed video mock) ===== */
+        .quote-card {
+            background: linear-gradient(145deg, #2d1b4e, #1a0b2e);
+            border: 1px solid rgba(244, 162, 97, 0.25);
+            box-shadow: 0 20px 50px -10px rgba(0,0,0,0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        .quote-card::before {
+            content: '\201C';
+            position: absolute;
+            top: -30px;
+            right: -10px;
+            font-size: 220px;
+            font-family: Georgia, serif;
+            color: rgba(244, 162, 97, 0.08);
+            line-height: 1;
+            pointer-events: none;
+        }
+
+        /* ===== Reveal on Scroll ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== Mobile Menu Animation ===== */
+        #mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        #mobile-menu.open { max-height: 500px; }
+
+        /* ===== Navbar focus ring (a11y) ===== */
+        nav a:focus-visible, button:focus-visible, a:focus-visible {
+            outline: 2px solid var(--color-gold);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        /* ===== Reduced motion ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
+                scroll-behavior: auto !important;
+            }
+            .reveal { opacity: 1; transform: none; }
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
-    <!-- الستارة الافتتاحية (Intro Curtain) -->
-    <div id="intro-curtain">
+    <!-- Skip Link for accessibility -->
+    <a href="#main-content" class="skip-link">تخطّي إلى المحتوى الرئيسي</a>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress" aria-hidden="true"></div>
+
+    <!-- ===== Intro Curtain ===== -->
+    <div id="intro-curtain" role="dialog" aria-label="مقدمة الموقع">
         <div class="intro-content">
             <h1 class="text-6xl md:text-8xl font-black mb-6 text-theater-gold animate__animated animate__zoomIn">وراء الكواليس 🎭</h1>
             <p class="text-2xl md:text-3xl mb-8 animate__animated animate__fadeInUp animate__delay-1s">جاهزين ندخل عالم السحر والخيال؟ ✨</p>
@@ -190,775 +311,596 @@
         </div>
     </div>
 
-    <!-- شريط التنقل (Navbar) -->
-    <nav class="bg-theater-dark text-white p-4 sticky top-0 z-50 shadow-lg">
+    <!-- ===== Navbar ===== -->
+    <nav class="bg-theater-dark text-white p-4 sticky top-0 z-50 shadow-lg" aria-label="القائمة الرئيسية">
         <div class="container mx-auto flex justify-between items-center">
-            <a href="#" class="text-3xl font-black text-theater-gold flex items-center gap-2">
-                <i class="fa-solid fa-masks-theater text-theater-red"></i> 
+            <a href="#" class="text-2xl md:text-3xl font-black text-theater-gold flex items-center gap-2">
+                <i class="fa-solid fa-masks-theater text-theater-red" aria-hidden="true"></i>
                 وراء الكواليس
             </a>
-            
-            <!-- زر القائمة للموبايل -->
-            <button id="mobile-menu-btn" class="md:hidden text-2xl focus:outline-none">
+
+            <button id="mobile-menu-btn" class="md:hidden text-2xl focus:outline-none p-2" aria-label="فتح القائمة" aria-expanded="false" aria-controls="mobile-menu">
                 <i class="fa-solid fa-bars"></i>
             </button>
 
-            <!-- روابط القائمة (ديسكتوب) -->
-            <div class="hidden md:flex space-x-6 space-x-reverse font-tajawal text-lg">
-                <a href="#about" class="hover:text-theater-gold transition-colors">عن الموقع 🌟</a>
-                <a href="#basics" class="hover:text-theater-gold transition-colors">أساسيات المسرح 📚</a>
-                <a href="#acting" class="hover:text-theater-gold transition-colors">إزاي نمثل؟ 🎬</a>
-                <a href="#masterclass" class="hover:text-theater-gold transition-colors">أسرار الكبار 👑</a>
-                <a href="#creators" class="hover:text-theater-gold transition-colors">صناع السحر 🪄</a>
-                <a href="#ai-director" class="hover:text-theater-gold transition-colors">المخرج الذكي 🤖</a>
-                <a href="#kids" class="hover:text-theater-gold transition-colors">ركن الأبطال الصغار 🦸‍♂️</a>
-                <a href="#fun" class="hover:text-theater-gold transition-colors">فاصل نضحك! 😂</a>
+            <div class="hidden md:flex gap-6 font-tajawal text-lg">
+                <a href="#basics"     class="nav-link hover:text-theater-gold">أساسيات المسرح 📚</a>
+                <a href="#acting"     class="nav-link hover:text-theater-gold">إزاي نمثل؟ 🎬</a>
+                <a href="#masterclass" class="nav-link hover:text-theater-gold">أسرار الكبار 👑</a>
+                <a href="#creators"   class="nav-link hover:text-theater-gold">صناع السحر 🪄</a>
+                <a href="#kids"       class="nav-link hover:text-theater-gold">ركن الأبطال الصغار 🦸‍♂️</a>
+                <a href="#fun"        class="nav-link hover:text-theater-gold">فاصل نضحك! 😂</a>
             </div>
         </div>
-        <!-- قائمة الموبايل (مخفية افتراضياً) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-theater-dark pt-4 pb-2 px-4 space-y-2 border-t border-gray-700 mt-4">
-            <a href="#about" class="block py-2 hover:text-theater-gold">عن الموقع 🌟</a>
-            <a href="#basics" class="block py-2 hover:text-theater-gold">أساسيات المسرح 📚</a>
-            <a href="#acting" class="block py-2 hover:text-theater-gold">إزاي نمثل؟ 🎬</a>
-            <a href="#masterclass" class="block py-2 hover:text-theater-gold">أسرار الكبار 👑</a>
-            <a href="#creators" class="block py-2 hover:text-theater-gold">صناع السحر 🪄</a>
-            <a href="#ai-director" class="block py-2 hover:text-theater-gold">المخرج الذكي 🤖</a>
-            <a href="#kids" class="block py-2 hover:text-theater-gold">ركن الأبطال الصغار 🦸‍♂️</a>
-            <a href="#fun" class="block py-2 hover:text-theater-gold">فاصل نضحك! 😂</a>
+
+        <div id="mobile-menu" class="md:hidden bg-theater-dark px-4 border-t border-gray-700 mt-2">
+            <a href="#basics"     class="block py-3 hover:text-theater-gold border-b border-gray-800">أساسيات المسرح 📚</a>
+            <a href="#acting"     class="block py-3 hover:text-theater-gold border-b border-gray-800">إزاي نمثل؟ 🎬</a>
+            <a href="#masterclass" class="block py-3 hover:text-theater-gold border-b border-gray-800">أسرار الكبار 👑</a>
+            <a href="#creators"   class="block py-3 hover:text-theater-gold border-b border-gray-800">صناع السحر 🪄</a>
+            <a href="#kids"       class="block py-3 hover:text-theater-gold border-b border-gray-800">ركن الأبطال الصغار 🦸‍♂️</a>
+            <a href="#fun"        class="block py-3 hover:text-theater-gold">فاصل نضحك! 😂</a>
         </div>
     </nav>
 
-    <!-- قسم الترحيب (Hero Section) -->
-    <header class="spotlight-bg relative pt-20 pb-32 overflow-hidden text-center">
-        <!-- عناصر متحركة في الخلفية -->
-        <div class="absolute top-10 left-10 text-5xl opacity-30 animate-wiggle">🎭</div>
-        <div class="absolute bottom-20 right-20 text-6xl opacity-30 animate-bounce-slow">✨</div>
-        <div class="absolute top-40 right-1/4 text-4xl opacity-20 animate-pulse">🎬</div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-            <h2 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
-                أهلاً بيك في عالم <br>
-                <span class="text-theater-gold inline-block mt-2">"وراء الكواليس"</span> 🤩
-            </h2>
-            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto font-tajawal leading-relaxed">
-                هنا المكان اللي بيجمع كل عشاق المسرح! من أول خطوة على الخشبة لحد ما تبقى نجم كبير. 
-                هنتعلم، نضحك، ونكتشف إزاي نصنع السحر قدام الجمهور! 🪄
-            </p>
-            <a href="#basics" class="inline-block bg-white text-theater-red font-bold text-xl py-4 px-8 rounded-full shadow-lg hover:bg-theater-gold hover:text-white transition-all transform hover:-translate-y-2">
-                يلا نبدأ الرحلة! 🚀
-            </a>
-        </div>
-        
-        <!-- شكل مموج أسفل الهيدر -->
-        <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
-            <svg class="relative block w-full h-[50px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
-                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.32,199.19,118.31,254.92,115.86,307.72,106.87,321.39,56.44Z" fill="#f8f9fa"></path>
-            </svg>
-        </div>
-    </header>
+    <main id="main-content">
 
-    <!-- قسم أساسيات المسرح -->
-    <section id="basics" class="py-20 px-4">
-        <div class="container mx-auto">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-black mb-4 section-title inline-block">أ ب مسرح 📚✨</h2>
-                <p class="text-xl text-gray-600 font-tajawal max-w-2xl mx-auto">عشان تبني عمارة لازم أساس قوي، وعشان تبقى ممثل شاطر، لازم تفهم لغة المسرح!</p>
-            </div>
+        <!-- ===== Hero Section ===== -->
+        <header class="spotlight-bg relative pt-20 pb-32 overflow-hidden text-center">
+            <div class="absolute top-10 left-10 text-5xl opacity-30 animate-wiggle" aria-hidden="true">🎭</div>
+            <div class="absolute bottom-20 right-20 text-6xl opacity-30 animate-bounce-slow" aria-hidden="true">✨</div>
+            <div class="absolute top-40 right-1/4 text-4xl opacity-20 animate-pulse" aria-hidden="true">🎬</div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- كارت 1 -->
-                <div class="glass-card p-8 text-center group">
-                    <div class="w-20 h-20 mx-auto bg-theater-blue text-white rounded-full flex items-center justify-center text-4xl mb-6 transform group-hover:rotate-12 transition-transform">
-                        <i class="fa-solid fa-map-location-dot"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-theater-dark">خشبة المسرح (The Stage)</h3>
-                    <p class="text-gray-600 font-tajawal leading-relaxed mb-4">
-                        مش مجرد خشب! دي خريطة ليها أسماء (يمين، يسار، مقدمة، عمق). لازم الممثل يحفظها زي اسمه عشان يعرف يتحرك صح. 🗺️
-                    </p>
-                    <ul class="text-right text-sm text-gray-500 space-y-2">
-                        <li><i class="fa-solid fa-check text-green-500 ml-2"></i><strong>الداون ستيج:</strong> أقرب نقطة للجمهور.</li>
-                        <li><i class="fa-solid fa-check text-green-500 ml-2"></i><strong>الأب ستيج:</strong> أبعد نقطة في الخلف.</li>
-                    </ul>
-                </div>
-
-                <!-- كارت 2 -->
-                <div class="glass-card p-8 text-center group">
-                    <div class="w-20 h-20 mx-auto bg-theater-red text-white rounded-full flex items-center justify-center text-4xl mb-6 transform group-hover:rotate-12 transition-transform">
-                        <i class="fa-solid fa-volume-high"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-theater-dark">الصوت ومخارج الألفاظ</h3>
-                    <p class="text-gray-600 font-tajawal leading-relaxed mb-4">
-                        صوتك هو سلاحك! لازم آخر واحد في الصالة يسمعك بوضوح من غير ما تصرخ وتتعب أحبالك الصوتية. 🗣️
-                    </p>
-                    <div class="bg-red-50 p-3 rounded-lg text-sm text-red-800 text-right">
-                        <strong>تدريب سريع:</strong> خد نفس عميق من بطنك (الحجاب الحاجز) وقول "آآآآه" لأطول فترة ممكنة! 🌬️
-                    </div>
-                </div>
-
-                <!-- كارت 3 -->
-                <div class="glass-card p-8 text-center group">
-                    <div class="w-20 h-20 mx-auto bg-theater-gold text-white rounded-full flex items-center justify-center text-4xl mb-6 transform group-hover:rotate-12 transition-transform">
-                        <i class="fa-solid fa-people-arrows"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-4 text-theater-dark">البلوكاج (Blocking)</h3>
-                    <p class="text-gray-600 font-tajawal leading-relaxed mb-4">
-                        يعني حركتك على المسرح. المخرج هو اللي بيحدد هتقف فين، هتمشي إمتى، وهتبص لمين. دي رقصة لازم تكون متناغمة! 💃🕺
-                    </p>
-                    <p class="text-sm font-bold text-theater-gold">القاعدة الذهبية: ماتديش ضهرك للجمهور أبداً (إلا لو مطلوب منك)! 🚫</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- قسم إزاي تذاكر دورك -->
-    <section id="acting" class="py-20 bg-theater-dark text-white relative overflow-hidden">
-        <!-- زينة خلفية -->
-        <div class="absolute -right-20 top-20 text-9xl text-gray-700 opacity-20 transform -rotate-45">🎭</div>
-        
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="flex flex-col lg:flex-row items-center gap-12">
-                
-                <div class="lg:w-1/2">
-                    <h2 class="text-4xl md:text-5xl font-black mb-6 text-theater-gold">إزاي تذاكر دورك وتلبس الشخصية؟ 🕵️‍♂️</h2>
-                    <p class="text-lg font-tajawal mb-8 leading-relaxed text-gray-300">
-                        التمثيل مش إنك تحفظ كلام وتقوله وخلاص! التمثيل إنك تبقى إنسان تاني لحم ودم. إزاي نعمل ده؟ دي الخلطة السحرية:
-                    </p>
-
-                    <div class="space-y-6 font-tajawal">
-                        <!-- خطوة 1 -->
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 shrink-0 bg-theater-red rounded-full flex items-center justify-center font-bold text-xl shadow-lg">1</div>
-                            <div>
-                                <h4 class="text-2xl font-bold mb-2 text-white">اقرأ المسرحية كلها (مش دورك بس!) 📖</h4>
-                                <p class="text-gray-400">لازم تفهم القصة كاملة، إنت مين في القصة دي؟ وأثرك إيه على باقي الشخصيات.</p>
-                            </div>
-                        </div>
-                        
-                        <!-- خطوة 2 -->
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 shrink-0 bg-theater-gold rounded-full flex items-center justify-center font-bold text-xl shadow-lg text-theater-dark">2</div>
-                            <div>
-                                <h4 class="text-2xl font-bold mb-2 text-white">ابني تاريخ الشخصية (Backstory) 🧠</h4>
-                                <p class="text-gray-400">اسأل نفسك: الشخصية دي بتحب إيه؟ بتخاف من إيه؟ طفولتها كانت عاملة إزاي؟ حتى لو مش مكتوب في النص، ألفه إنت في خيالك!</p>
-                            </div>
-                        </div>
-
-                        <!-- خطوة 3 -->
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 shrink-0 bg-theater-blue rounded-full flex items-center justify-center font-bold text-xl shadow-lg">3</div>
-                            <div>
-                                <h4 class="text-2xl font-bold mb-2 text-white">الهدف والعقبة (Objective & Obstacle) 🎯</h4>
-                                <p class="text-gray-400">كل مشهد بتدخله لازم يكون ليك "هدف" عايز تحققه، وفي "عقبة" بتمنعك. الصراع ده هو اللي بيخلق التمثيل الحقيقي!</p>
-                            </div>
-                        </div>
-
-                        <!-- خطوة 4 -->
-                        <div class="flex items-start gap-4">
-                            <div class="w-12 h-12 shrink-0 bg-green-500 rounded-full flex items-center justify-center font-bold text-xl shadow-lg">4</div>
-                            <div>
-                                <h4 class="text-2xl font-bold mb-2 text-white">البعد المادي (Physicality) 🚶‍♂️</h4>
-                                <p class="text-gray-400">الشخصية بتمشي إزاي؟ بتتنفس إزاي؟ صوتها تخين ولا رفيع؟ جرب تمشي في الأوضة بطريقة الشخصية مش بطريقتك.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- فيديو توضيحي (عنصر تخيلي) -->
-                <div class="lg:w-1/2 w-full">
-                    <div class="bg-gray-800 p-4 rounded-2xl border-4 border-gray-700 shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-300">
-                        <div class="aspect-video bg-black rounded-xl flex items-center justify-center relative overflow-hidden group">
-                            <!-- صورة مكان الفيديو -->
-                            <img src="https://images.unsplash.com/photo-1507676184212-d0330a15233c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="ممثلين يتدربون" class="w-full h-full object-cover opacity-60 group-hover:opacity-40 transition-opacity">
-                            <button class="absolute z-10 w-20 h-20 bg-theater-red rounded-full flex items-center justify-center text-3xl pl-2 shadow-[0_0_20px_rgba(230,57,70,0.8)] hover:scale-110 transition-transform" onclick="alert('تخيل إن ده فيديو بيشرح إزاي تتقمص دورك! 😉🎬')">
-                                <i class="fa-solid fa-play"></i>
-                            </button>
-                        </div>
-                        <p class="text-center mt-4 text-gray-400 font-tajawal italic">"التمثيل هو أن تعيش بصدق في ظروف خيالية." - سانفورد مايسنر</p>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- قسم الماستر كلاس (للمحترفين والكبار) -->
-    <section id="masterclass" class="py-20 px-4 bg-gray-100">
-        <div class="container mx-auto">
-            <div class="text-center mb-16">
-                <span class="bg-theater-dark text-theater-gold px-4 py-1 rounded-full text-sm font-bold tracking-wider mb-4 inline-block">للمحترفين واللي عايزين يبقوا كبار 👑</span>
-                <h2 class="text-4xl md:text-5xl font-black mb-4 section-title block">أسرار الماستر كلاس 🏆</h2>
-                <p class="text-xl text-gray-600 font-tajawal max-w-2xl mx-auto">هنا هنتكلم في التقيل.. إزاي تتعامل مع المواقف الصعبة وتفاصيل التفاصيل اللي بتفرق بين الممثل الهاوي والنجم!</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- سر 1 -->
-                <div class="bg-white p-8 rounded-2xl shadow-md border-r-4 border-theater-red hover:shadow-xl transition-shadow">
-                    <h3 class="text-2xl font-bold mb-3 text-theater-dark flex items-center gap-2">
-                        <i class="fa-solid fa-bolt text-yellow-500"></i> نسيت الكلام على المسرح؟ (الـ Blank)
-                    </h3>
-                    <p class="font-tajawal text-gray-700 mb-4 leading-relaxed">
-                        الكابوس الأكبر لأي ممثل! فجأة عقلك يوقف. الحل؟ <strong>إياك تخرج من الشخصية!</strong>
-                    </p>
-                    <ul class="list-disc list-inside text-gray-600 font-tajawal space-y-2">
-                        <li>استمر في الفعل (Action).. لو كنت بتشرب شاي كمل شرب بتركيز.</li>
-                        <li>اعتمد على زميلك، ممكن يرميلك كلمة (Cue) تفكرك.</li>
-                        <li>ارتجل في حدود الشخصية والموقف لحد ما تفتكر.</li>
-                    </ul>
-                </div>
-
-                <!-- سر 2 -->
-                <div class="bg-white p-8 rounded-2xl shadow-md border-r-4 border-theater-blue hover:shadow-xl transition-shadow">
-                    <h3 class="text-2xl font-bold mb-3 text-theater-dark flex items-center gap-2">
-                        <i class="fa-solid fa-eye-slash text-gray-800"></i> الحائط الرابع (The Fourth Wall)
-                    </h3>
-                    <p class="font-tajawal text-gray-700 mb-4 leading-relaxed">
-                        تخيل إن خشبة المسرح أوضة مقفولة من 3 حيطان، والجمهور بيبص عليك من الحيطة الرابعة الشفافة.
-                    </p>
-                    <div class="bg-blue-50 p-4 rounded-lg text-blue-900 font-tajawal text-sm border border-blue-100">
-                        <strong>امتى نكسره؟</strong> بعض المدارس المسرحية (زي بريخت) أو الكوميديا بتعتمد على "كسر الحائط الرابع" وإن الممثل يكلم الجمهور مباشرة عشان يورطهم في الحدث. لازم تعملها بوعي شديد!
-                    </div>
-                </div>
-
-                <!-- سر 3 -->
-                <div class="bg-white p-8 rounded-2xl shadow-md border-r-4 border-theater-gold hover:shadow-xl transition-shadow">
-                    <h3 class="text-2xl font-bold mb-3 text-theater-dark flex items-center gap-2">
-                        <i class="fa-solid fa-masks-theater text-theater-gold"></i> الكوميديا والتوقيت (Timing)
-                    </h3>
-                    <p class="font-tajawal text-gray-700 mb-4 leading-relaxed">
-                        إضحاك الناس أصعب من إبكائهم. السر كله في "التوقيت" أو الـ (Pause).
-                    </p>
-                    <p class="text-gray-600 font-tajawal">
-                        جملة عادية ممكن تبقى تموت من الضحك لو سكت ثانية واحدة بس قبل ما تقول الكلمة الأخيرة. التدريب على الإيقاع الداخلي للمشهد ومراقبة رد فعل الجمهور (الضحكة) هو مفتاح الكوميديان الناجح. ⏱️😂
-                    </p>
-                </div>
-
-                <!-- سر 4 -->
-                <div class="bg-white p-8 rounded-2xl shadow-md border-r-4 border-purple-500 hover:shadow-xl transition-shadow">
-                    <h3 class="text-2xl font-bold mb-3 text-theater-dark flex items-center gap-2">
-                        <i class="fa-solid fa-fire text-orange-500"></i> الذاكرة الانفعالية (Emotion Memory)
-                    </h3>
-                    <p class="font-tajawal text-gray-700 mb-4 leading-relaxed">
-                        إزاي تعيط بجد؟ ستانيسلافسكي قال إنك تستدعي موقف حقيقي حصلك في الماضي خلاك تحس بنفس الإحساس اللي الشخصية حاساه دلوقتي.
-                    </p>
-                    <p class="text-sm text-red-600 font-bold mt-2">
-                        ⚠️ تحذير: دي تقنية متقدمة جداً ومحتاجة تدريب عشان ما تأثرش على نفسية الممثل بعد العرض!
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- قسم صناع السحر (إخراج، تأليف، ديكور، غناء) -->
-    <section id="creators" class="py-24 px-4 bg-theater-dark text-white relative overflow-hidden">
-        <!-- زخارف خلفية -->
-        <div class="absolute top-0 right-0 w-64 h-64 bg-theater-red rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-        <div class="absolute bottom-0 left-0 w-80 h-80 bg-theater-blue rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
-
-        <div class="container mx-auto relative z-10">
-            <div class="text-center mb-20">
-                <span class="bg-white/10 text-theater-gold px-6 py-2 rounded-full text-sm font-bold tracking-wider mb-6 inline-block backdrop-blur-sm border border-theater-gold/30">ما وراء الستارة العظيمة 🛠️</span>
-                <h2 class="text-4xl md:text-6xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-theater-gold to-yellow-200">صناع السحر (الجيش الخفي) 🪄</h2>
-                <p class="text-xl md:text-2xl text-gray-300 font-tajawal max-w-4xl mx-auto leading-relaxed">
-                    المسرح مش بس ممثل بيقف يتكلم! ورا كل عرض عظيم، جيش من المبدعين بيبنوا العالم ده من الصفر. يلا نتعمق بالتفصيل الشديد في أسرار الإخراج، التأليف، الديكور، والغناء!
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
-                
-                <!-- 1. الإخراج -->
-                <div class="bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl border border-gray-700 hover:border-theater-blue transition-all group relative overflow-hidden">
-                    <div class="absolute -right-4 -top-4 text-8xl opacity-10 group-hover:scale-110 transition-transform duration-500">🎬</div>
-                    <h3 class="text-3xl font-black mb-6 text-theater-blue flex items-center gap-3">
-                        <i class="fa-solid fa-chair"></i> الإخراج (رُبّان السفينة)
-                    </h3>
-                    <p class="text-gray-300 font-tajawal mb-6 text-lg">المخرج هو "المايسترو" اللي بيشوف العرض كامل في خياله قبل ما يبدأ. إزاي بيعمل ده؟</p>
-                    <ul class="space-y-4 font-tajawal text-gray-400">
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-eye text-theater-gold mt-1"></i>
-                            <div><strong class="text-white">الرؤية الإخراجية (Director's Vision):</strong> النص مجرد كلمات، المخرج هو اللي بيحدد هتقدم إزاي؟ (هل هنقدم هاملت في العصور الوسطى ولا في شركة مودرن سنة 2024؟).</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-users text-theater-gold mt-1"></i>
-                            <div><strong class="text-white">الكاستينج (Casting):</strong> 80% من نجاح المخرج في اختياره للممثل الصح للدور الصح. كيميا الممثلين مع بعض بتصنع المعجزات.</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-chess-board text-theater-gold mt-1"></i>
-                            <div><strong class="text-white">الميزانسين (Mise-en-scène):</strong> التكوين البصري. المخرج بيرسم لوحة تشكيلية على المسرح. مين واقف فين؟ وليه؟ (وقوف ممثل في مستوى أعلى بيعطيه قوة وسيطرة درامية).</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-stopwatch text-theater-gold mt-1"></i>
-                            <div><strong class="text-white">ضبط الإيقاع (Pacing):</strong> الكوميديا محتاجة إيقاع سريع جداً (Ping-Pong)، والتراجيديا محتاجة فترات صمت (Pauses) عشان المشاعر توصل للجمهور.</div>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- 2. التأليف -->
-                <div class="bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl border border-gray-700 hover:border-theater-gold transition-all group relative overflow-hidden">
-                    <div class="absolute -left-4 -top-4 text-8xl opacity-10 group-hover:scale-110 transition-transform duration-500">✍️</div>
-                    <h3 class="text-3xl font-black mb-6 text-theater-gold flex items-center gap-3">
-                        <i class="fa-solid fa-feather-pointed"></i> التأليف (خالق العوالم)
-                    </h3>
-                    <p class="text-gray-300 font-tajawal mb-6 text-lg">كل حاجة بتبدأ من الورقة والقلم. الكاتب المسرحي مش بيكتب قصة تتقرأ، بيكتب "أفعال" تتشاف!</p>
-                    <ul class="space-y-4 font-tajawal text-gray-400">
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-bolt text-theater-red mt-1"></i>
-                            <div><strong class="text-white">الصراع (Conflict):</strong> القاعدة الذهبية: مفيش صراع = مفيش مسرح! لازم بطل عايز حاجة بشدة (هدف)، وفي مانع قوي بيمنعه (عقبة).</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-chart-line text-theater-red mt-1"></i>
-                            <div><strong class="text-white">البناء الدرامي (Plot Arc):</strong> بداية (تعريف بالشخصيات)، تصاعد الأحداث (العقدة بتكبر)، الذروة (Climax - لحظة الانفجار والتوتر الأقصى)، ثم الحل (Resolution).</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-comments text-theater-red mt-1"></i>
-                            <div><strong class="text-white">الحوار الفعّال:</strong> في المسرح مفيش كلام للحشو. كل جملة لازم إما (تدفع القصة للأمام) أو (تكشف سر عن شخصية المتحدث). غير كده تتحذف فوراً!</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-book-open-reader text-theater-red mt-1"></i>
-                            <div><strong class="text-white">الإرشادات المسرحية (Stage Directions):</strong> الكاتب بيوصف المكان، الزمان، وحالة الشخصية بين الأقواس (يدخل غاضباً، يرمي الكوب).</div>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- 3. السينوغرافيا والديكور -->
-                <div class="bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl border border-gray-700 hover:border-theater-red transition-all group relative overflow-hidden">
-                    <div class="absolute -right-4 -bottom-4 text-8xl opacity-10 group-hover:scale-110 transition-transform duration-500">🎨</div>
-                    <h3 class="text-3xl font-black mb-6 text-theater-red flex items-center gap-3">
-                        <i class="fa-solid fa-paint-roller"></i> السينوغرافيا والديكور
-                    </h3>
-                    <p class="text-gray-300 font-tajawal mb-6 text-lg">تحويل الخشبة الفاضية لغابة سحرية، أو سجن مخيف، أو شقة بسيطة.. ده سحر مهندس الديكور والإضاءة!</p>
-                    <ul class="space-y-4 font-tajawal text-gray-400">
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-hammer text-theater-blue mt-1"></i>
-                            <div><strong class="text-white">البيئة والزمن:</strong> الديكور بيجاوب على أسئلة المشاهد فوراً (إحنا فين؟ إحنا امتى؟ الشخصيات دي غنية ولا فقيرة؟) من خلال العفش والألوان.</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-palette text-theater-blue mt-1"></i>
-                            <div><strong class="text-white">سيكولوجية الألوان:</strong> الألوان بتتكلم! الأحمر للغضب والشغف، الأزرق للحزن والبرود، الألوان الداكنة للغموض. ديكور الحيطة نفسه بيمثل!</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-lightbulb text-theater-blue mt-1"></i>
-                            <div><strong class="text-white">الإضاءة (Lighting):</strong> الإضاءة هي أداة التوجيه السحرية. (سبوت لايت) واحد على ممثل في وسط الضلمة بيجبر كل الجمهور يبص عليه ويركز في كل همسة بيقولها.</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-layer-group text-theater-blue mt-1"></i>
-                            <div><strong class="text-white">تعدد المستويات:</strong> استخدام السلالم، المنصات، والبلكونات بيعطي عمق للمسرح ويسمح للمخرج بحركة الممثلين فوق وتحت بدل ما يمشوا في خط واحد.</div>
-                        </li>
-                    </ul>
-                </div>
-
-                <!-- 4. المسرح الغنائي -->
-                <div class="bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl border border-gray-700 hover:border-pink-500 transition-all group relative overflow-hidden">
-                    <div class="absolute -left-4 -bottom-4 text-8xl opacity-10 group-hover:scale-110 transition-transform duration-500">🎤</div>
-                    <h3 class="text-3xl font-black mb-6 text-pink-500 flex items-center gap-3">
-                        <i class="fa-solid fa-microphone-lines"></i> الغناء والاستعراض
-                    </h3>
-                    <p class="text-gray-300 font-tajawal mb-6 text-lg">المسرح الغنائي (Musicals) هو أصعب وأمتع أنواع الفنون. الممثل هنا لازم يكون "وحش" في الـ Triple Threat (تمثيل، غناء، رقص)!</p>
-                    <ul class="space-y-4 font-tajawal text-gray-400">
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-masks-theater text-theater-gold mt-1"></i>
-                            <div><strong class="text-white">تمثيل الأغنية (Acting the Song):</strong> أنت لا تغني لتطرب الجمهور فقط! أنت تغني لأن الكلام العادي لم يعد يكفي للتعبير عن المشاعر. الإحساس يسبق اللحن.</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-wind text-theater-gold mt-1"></i>
-                            <div><strong class="text-white">التنفس البطني (Diaphragm):</strong> سر قوة الصوت المسرحي! المغني بيتنفس من الحجاب الحاجز مش من صدره، عشان يقدر يغني جمل طويلة بصوت قوي وهو بيجري ويرقص.</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-shoe-prints text-theater-gold mt-1"></i>
-                            <div><strong class="text-white">الكوريوجرافي (Choreography):</strong> الرقصات والاستعراضات مش مجرد حركات عشوائية، دي لغة جسد جماعية بتكمل القصة وتبرز طاقة المشهد الغنائي.</div>
-                        </li>
-                        <li class="flex items-start gap-3">
-                            <i class="fa-solid fa-ear-listen text-theater-gold mt-1"></i>
-                            <div><strong class="text-white">مخارج الألفاظ (Articulation):</strong> أهم حاجة في أغاني المسرح إن الجمهور (يفهم) الكلمات وسط الموسيقى العالية. الحروف الساكنة لازم تُنطق بوضوح شديد زي طلقات الرصاص!</div>
-                        </li>
-                    </ul>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- قسم المخرج الذكي (الذكاء الاصطناعي) -->
-    <section id="ai-director" class="py-20 px-4 relative" style="background: linear-gradient(to bottom, #1a0b2e, #2d1b4e);">
-        <!-- مؤثرات بصرية في الخلفية -->
-        <div class="absolute inset-0 opacity-10" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
-        
-        <div class="container mx-auto relative z-10">
-            <div class="text-center mb-16">
-                <span class="bg-theater-gold text-theater-dark px-4 py-1 rounded-full text-sm font-bold tracking-wider mb-4 inline-block animate-pulse">جديد و حصري 🚀</span>
-                <h2 class="text-4xl md:text-5xl font-black mb-4 text-white block">المخرج الذكي 🤖🎭</h2>
-                <p class="text-xl text-gray-300 font-tajawal max-w-2xl mx-auto">
-                    بمساعدة الذكاء الاصطناعي المتقدم، تقدر دلوقتي تألف شخصية تتدرب عليها، أو تسأل مخرجك الافتراضي أي سؤال عن المسرح!
-                </p>
-            </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <!-- مؤلف الشخصيات -->
-                <div class="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-3xl shadow-2xl">
-                    <h3 class="text-2xl font-bold text-theater-gold mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i> مؤلف الشخصيات السحري
-                    </h3>
-                    <p class="text-gray-300 font-tajawal mb-6">
-                        اكتب فكرة بسيطة لشخصية (مثلاً: بطل خارق يخاف من الظلام، أو ملك فقد مملكته بسبب نكتة)، والذكاء الاصطناعي هيكتبلك تاريخها ومونولوج تتدرب عليه!
-                    </p>
-                    
-                    <div class="mb-4">
-                        <textarea id="ai-char-input" rows="3" class="w-full bg-black/30 border border-gray-600 rounded-xl p-4 text-white placeholder-gray-400 focus:outline-none focus:border-theater-gold font-tajawal" placeholder="مثال: محقق سري فاشل بيحقق في سرقة سندوتش..."></textarea>
-                    </div>
-                    
-                    <button id="ai-char-btn" class="w-full bg-theater-gold text-theater-dark font-bold py-3 px-6 rounded-xl hover:bg-white transition-colors flex justify-center items-center gap-2">
-                        <span>ألّف الشخصية! 🪄</span>
-                        <div id="char-spinner" class="hidden w-5 h-5 border-2 border-theater-dark border-t-transparent rounded-full animate-spin"></div>
-                    </button>
-
-                    <!-- نتيجة تأليف الشخصية -->
-                    <div id="ai-char-output" class="mt-6 bg-black/40 rounded-xl p-6 hidden text-white font-tajawal border border-theater-gold/30">
-                        <!-- Content will be injected here -->
-                    </div>
-                </div>
-
-                <!-- شات المخرج -->
-                <div class="bg-white/10 backdrop-blur-lg border border-white/20 p-8 rounded-3xl shadow-2xl flex flex-col h-[500px]">
-                    <h3 class="text-2xl font-bold text-theater-blue mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-clapperboard"></i> اسأل المخرج الافتراضي
-                    </h3>
-                    <p class="text-gray-300 font-tajawal mb-4 text-sm">
-                        عندك مشهد صعب؟ مش عارف تحفظ النص؟ اسأل المخرج وهو هينصحك!
-                    </p>
-                    
-                    <!-- منطقة الشات -->
-                    <div id="chat-box" class="flex-1 overflow-y-auto bg-black/20 rounded-xl p-4 mb-4 space-y-4 border border-gray-700 flex flex-col">
-                        <!-- رسالة ترحيب -->
-                        <div class="flex gap-3 items-start">
-                            <div class="w-10 h-10 rounded-full bg-theater-blue flex items-center justify-center shrink-0 text-xl">🎬</div>
-                            <div class="bg-theater-blue/20 p-3 rounded-2xl rounded-tr-none text-white font-tajawal border border-theater-blue/30 text-sm">
-                                أهلاً بيك يا فنان! أنا المخرج الذكي، جاهز أساعدك في أي حاجة تخص المسرح والتمثيل. اسألني! ✨
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- إدخال الشات -->
-                    <div class="flex gap-2">
-                        <input type="text" id="ai-chat-input" class="flex-1 bg-black/30 border border-gray-600 rounded-xl p-3 text-white placeholder-gray-400 focus:outline-none focus:border-theater-blue font-tajawal" placeholder="مثال: إزاي أتحكم في توتري قبل ما أدخل المسرح؟">
-                        <button id="ai-chat-btn" class="bg-theater-blue text-white w-14 rounded-xl hover:bg-blue-600 transition-colors flex justify-center items-center">
-                            <i id="chat-send-icon" class="fa-solid fa-paper-plane"></i>
-                            <div id="chat-spinner" class="hidden w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ركن الأبطال الصغار -->
-    <section id="kids" class="py-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] bg-blue-100 relative">
-        <div class="container mx-auto px-4 relative z-10">
-            <div class="bg-white/80 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-2xl border-4 border-dashed border-blue-400 text-center">
-                
-                <h2 class="text-4xl md:text-5xl font-black mb-6 text-blue-600 flex justify-center items-center gap-4">
-                    <span class="emoji-float">🧸</span> ركن الأبطال الصغار <span class="emoji-float" style="animation-delay: 0.5s;">🎈</span>
+            <div class="container mx-auto px-4 relative z-10">
+                <h2 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+                    أهلاً بيك في عالم <br>
+                    <span class="text-theater-gold inline-block mt-2">"وراء الكواليس"</span> 🤩
                 </h2>
-                
-                <p class="text-2xl font-tajawal font-bold text-gray-700 mb-8">
-                    نفسك تطلع على المسرح وتبقى سوبر هيرو؟ 🦸‍♀️🦸‍♂️
+                <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto font-tajawal leading-relaxed">
+                    هنا المكان اللي بيجمع كل عشاق المسرح! من أول خطوة على الخشبة لحد ما تبقى نجم كبير.
+                    هنتعلم، نضحك، ونكتشف إزاي نصنع السحر قدام الجمهور! 🪄
                 </p>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-right">
-                    <div class="bg-pink-100 p-6 rounded-2xl border-2 border-pink-300">
-                        <h4 class="text-xl font-bold text-pink-600 mb-2">لعبة المراية 🪞</h4>
-                        <p class="font-tajawal text-gray-700">اقف قدام صاحبك، واحد يعمل حركة والتاني يقلده بالظبط كأنه مرايته! اللعبة دي بتعلمنا التركيز العالي.</p>
-                    </div>
-                    
-                    <div class="bg-yellow-100 p-6 rounded-2xl border-2 border-yellow-300">
-                        <h4 class="text-xl font-bold text-yellow-600 mb-2">تخيل إنك... 🐘</h4>
-                        <p class="font-tajawal text-gray-700">العبوا لعبة التحولات! تخيل إنك فيل تقيل، بعدين فراشة خفيفة، بعدين إنسان آلي! ده بيشغل الخيال والجسم.</p>
-                    </div>
-                    
-                    <div class="bg-green-100 p-6 rounded-2xl border-2 border-green-300">
-                        <h4 class="text-xl font-bold text-green-600 mb-2">العلبة السحرية 📦</h4>
-                        <p class="font-tajawal text-gray-700">مثل إن قدامك علبة، افتحها ببطء، وطلّع منها حاجة (مش موجودة بجد) وورينا رياكشنك! لقيت إيه؟ ثعبان ولا شيكولاتة؟</p>
-                    </div>
+                <a href="#basics" class="inline-block bg-white text-theater-red font-bold text-xl py-4 px-8 rounded-full shadow-lg hover:bg-theater-gold hover:text-white transition-all transform hover:-translate-y-2">
+                    يلا نبدأ الرحلة! 🚀
+                </a>
+            </div>
+
+            <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none" aria-hidden="true">
+                <svg class="relative block w-full h-[50px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,121.32,199.19,118.31,254.92,115.86,307.72,106.87,321.39,56.44Z" fill="#f8f9fa"></path>
+                </svg>
+            </div>
+        </header>
+
+        <!-- ===== Basics Section ===== -->
+        <section id="basics" class="py-20 px-4">
+            <div class="container mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <h2 class="text-4xl md:text-5xl font-black mb-4 section-title inline-block">أ ب مسرح 📚✨</h2>
+                    <p class="text-xl text-gray-600 font-tajawal max-w-2xl mx-auto">عشان تبني عمارة لازم أساس قوي، وعشان تبقى ممثل شاطر، لازم تفهم لغة المسرح!</p>
                 </div>
 
-                <div class="inline-block bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-xl animate-bounce">
-                    التمثيل للأطفال هو أحلى "لعب بجد"! 😉
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <article class="glass-card p-8 text-center group reveal">
+                        <div class="w-20 h-20 mx-auto bg-theater-blue text-white rounded-full flex items-center justify-center text-4xl mb-6 transform group-hover:rotate-12 transition-transform">
+                            <i class="fa-solid fa-map-location-dot" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-theater-dark">خشبة المسرح (The Stage)</h3>
+                        <p class="text-gray-600 font-tajawal leading-relaxed mb-4">
+                            مش مجرد خشب! دي خريطة ليها أسماء (يمين، يسار، مقدمة، عمق). لازم الممثل يحفظها زي اسمه عشان يعرف يتحرك صح. 🗺️
+                        </p>
+                        <ul class="text-right text-sm text-gray-500 space-y-2">
+                            <li><i class="fa-solid fa-check text-green-500 ml-2" aria-hidden="true"></i><strong>الداون ستيج:</strong> أقرب نقطة للجمهور.</li>
+                            <li><i class="fa-solid fa-check text-green-500 ml-2" aria-hidden="true"></i><strong>الأب ستيج:</strong> أبعد نقطة في الخلف.</li>
+                        </ul>
+                    </article>
+
+                    <article class="glass-card p-8 text-center group reveal">
+                        <div class="w-20 h-20 mx-auto bg-theater-red text-white rounded-full flex items-center justify-center text-4xl mb-6 transform group-hover:rotate-12 transition-transform">
+                            <i class="fa-solid fa-volume-high" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-theater-dark">الصوت ومخارج الألفاظ</h3>
+                        <p class="text-gray-600 font-tajawal leading-relaxed mb-4">
+                            صوتك هو سلاحك! لازم آخر واحد في الصالة يسمعك بوضوح من غير ما تصرخ وتتعب أحبالك الصوتية. 🗣️
+                        </p>
+                        <div class="bg-red-50 p-3 rounded-lg text-sm text-red-800 text-right">
+                            <strong>تدريب سريع:</strong> خد نفس عميق من بطنك (الحجاب الحاجز) وقول "آآآآه" لأطول فترة ممكنة! 🌬️
+                        </div>
+                    </article>
+
+                    <article class="glass-card p-8 text-center group reveal">
+                        <div class="w-20 h-20 mx-auto bg-theater-gold text-white rounded-full flex items-center justify-center text-4xl mb-6 transform group-hover:rotate-12 transition-transform">
+                            <i class="fa-solid fa-people-arrows" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-4 text-theater-dark">البلوكاج (Blocking)</h3>
+                        <p class="text-gray-600 font-tajawal leading-relaxed mb-4">
+                            يعني حركتك على المسرح. المخرج هو اللي بيحدد هتقف فين، هتمشي إمتى، وهتبص لمين. دي رقصة لازم تكون متناغمة! 💃🕺
+                        </p>
+                        <p class="text-sm font-bold text-theater-gold">القاعدة الذهبية: ماتديش ضهرك للجمهور أبداً (إلا لو مطلوب منك)! 🚫</p>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- فاصل نضحك (مواقف المسرح) -->
-    <section id="fun" class="py-20 bg-theater-dark text-white">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl md:text-5xl font-black mb-12 text-yellow-400">فاصل نضحك! كوارث المسرح 😂🎭</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- موقف 1 -->
-                <div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition-colors cursor-pointer group">
-                    <div class="text-6xl mb-4 group-hover:scale-125 transition-transform">👖</div>
-                    <h3 class="text-xl font-bold mb-2 text-theater-gold">بنطلون الملك!</h3>
-                    <p class="font-tajawal text-gray-300 text-sm">
-                        مرة ممثل بيعمل دور ملك عظيم، وهو بيدخل بكل هيبة على المسرح... بنطلونه اتقطع! عمل إيه؟ قعد على أقرب كرسي وقال للممثلين: "اقتربوا أيها الرعايا، الملك متعب اليوم ولا يستطيع الوقوف!" وأنقذ الموقف! 🤣
-                    </p>
-                </div>
-                
-                <!-- موقف 2 -->
-                <div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition-colors cursor-pointer group">
-                    <div class="text-6xl mb-4 group-hover:scale-125 transition-transform">🚪</div>
-                    <h3 class="text-xl font-bold mb-2 text-theater-gold">الباب العنيد!</h3>
-                    <p class="font-tajawal text-gray-300 text-sm">
-                        المشهد: ممثل غضبان جداً المفروض يرزع الباب ويخرج. الممثل بيشد الباب.. الباب معلق مش بيفتح! بيشد أكتر.. مفيش فايدة. فجأة بصلهم وقال: "أنا هقعد معاكوا هنا عشان الجو بره وحش!" ونط من الشباك الديكور! 🪟🏃‍♂️
-                    </p>
-                </div>
-                
-                <!-- موقف 3 -->
-                <div class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition-colors cursor-pointer group">
-                    <div class="text-6xl mb-4 group-hover:scale-125 transition-transform">☎️</div>
-                    <h3 class="text-xl font-bold mb-2 text-theater-gold">تليفون من الماضي!</h3>
-                    <p class="font-tajawal text-gray-300 text-sm">
-                        مسرحية بتدور أحداثها في العصر الروماني (من 2000 سنة). فجأة.. موبايل حد من الجمهور رن بصوت عالي جداً! الممثل (الإمبراطور) بص للجمهور بكل ثقة وقال: "أيها الحراس، يبدو أن هناك اختراعاً شيطانياً يزعج الآلهة! اقطعوا رأس صاحبه!" صالة المسرح كلها ماتت من الضحك! 📱🏛️
-                    </p>
+        <!-- ===== Acting Section (replaced video mock with a quote / tips card) ===== -->
+        <section id="acting" class="py-20 bg-theater-dark text-white relative overflow-hidden">
+            <div class="absolute -right-20 top-20 text-9xl text-gray-700 opacity-20 transform -rotate-45" aria-hidden="true">🎭</div>
+
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="flex flex-col lg:flex-row items-center gap-12">
+
+                    <div class="lg:w-1/2 reveal">
+                        <h2 class="text-4xl md:text-5xl font-black mb-6 text-theater-gold">إزاي تذاكر دورك وتلبس الشخصية؟ 🕵️‍♂️</h2>
+                        <p class="text-lg font-tajawal mb-8 leading-relaxed text-gray-300">
+                            التمثيل مش إنك تحفظ كلام وتقوله وخلاص! التمثيل إنك تبقى إنسان تاني لحم ودم. إزاي نعمل ده؟ دي الخلطة السحرية:
+                        </p>
+
+                        <ol class="space-y-6 font-tajawal">
+                            <li class="flex items-start gap-4">
+                                <div class="w-12 h-12 shrink-0 bg-theater-red rounded-full flex items-center justify-center font-bold text-xl shadow-lg" aria-hidden="true">1</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold mb-2 text-white">اقرأ المسرحية كلها (مش دورك بس!) 📖</h3>
+                                    <p class="text-gray-400">لازم تفهم القصة كاملة، إنت مين في القصة دي؟ وأثرك إيه على باقي الشخصيات.</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-4">
+                                <div class="w-12 h-12 shrink-0 bg-theater-gold rounded-full flex items-center justify-center font-bold text-xl shadow-lg text-theater-dark" aria-hidden="true">2</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold mb-2 text-white">ابني تاريخ الشخصية (Backstory) 🧠</h3>
+                                    <p class="text-gray-400">اسأل نفسك: الشخصية دي بتحب إيه؟ بتخاف من إيه؟ طفولتها كانت عاملة إزاي؟ حتى لو مش مكتوب في النص، ألفه إنت في خيالك!</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-4">
+                                <div class="w-12 h-12 shrink-0 bg-theater-blue rounded-full flex items-center justify-center font-bold text-xl shadow-lg" aria-hidden="true">3</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold mb-2 text-white">الهدف والعقبة (Objective &amp; Obstacle) 🎯</h3>
+                                    <p class="text-gray-400">كل مشهد بتدخله لازم يكون ليك "هدف" عايز تحققه، وفي "عقبة" بتمنعك. الصراع ده هو اللي بيخلق التمثيل الحقيقي!</p>
+                                </div>
+                            </li>
+
+                            <li class="flex items-start gap-4">
+                                <div class="w-12 h-12 shrink-0 bg-green-500 rounded-full flex items-center justify-center font-bold text-xl shadow-lg" aria-hidden="true">4</div>
+                                <div>
+                                    <h3 class="text-2xl font-bold mb-2 text-white">البعد المادي (Physicality) 🚶‍♂️</h3>
+                                    <p class="text-gray-400">الشخصية بتمشي إزاي؟ بتتنفس إزاي؟ صوتها تخين ولا رفيع؟ جرب تمشي في الأوضة بطريقة الشخصية مش بطريقتك.</p>
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <!-- Quote / Tips card (instead of the removed video mock) -->
+                    <div class="lg:w-1/2 w-full reveal">
+                        <div class="quote-card p-8 md:p-10 rounded-3xl transform rotate-1 hover:rotate-0 transition-transform duration-500">
+                            <i class="fa-solid fa-quote-right text-theater-gold text-4xl mb-4" aria-hidden="true"></i>
+                            <blockquote class="text-2xl md:text-3xl font-bold leading-relaxed text-white mb-6">
+                                "التمثيل هو أن تعيش بصدق في ظروف خيالية."
+                            </blockquote>
+                            <cite class="block text-theater-gold font-tajawal text-lg not-italic mb-8">
+                                — سانفورد مايسنر
+                            </cite>
+
+                            <div class="border-t border-gray-700 pt-6">
+                                <h4 class="text-lg font-bold text-theater-gold mb-4 flex items-center gap-2">
+                                    <i class="fa-solid fa-lightbulb" aria-hidden="true"></i>
+                                    نصايح ذهبية للبروفة
+                                </h4>
+                                <ul class="space-y-3 text-gray-300 font-tajawal">
+                                    <li class="flex items-start gap-2">
+                                        <i class="fa-solid fa-star text-theater-gold mt-1 text-sm" aria-hidden="true"></i>
+                                        <span>اذكر نصك بصوت عالي وأنت بتتحرك، مش وأنت قاعد.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <i class="fa-solid fa-star text-theater-gold mt-1 text-sm" aria-hidden="true"></i>
+                                        <span>سجّل نفسك واستمع للحقيقة مش للصوت اللي في دماغك.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <i class="fa-solid fa-star text-theater-gold mt-1 text-sm" aria-hidden="true"></i>
+                                        <span>البروفة قدام مراية بتكشف حركات جسمك الغلط.</span>
+                                    </li>
+                                    <li class="flex items-start gap-2">
+                                        <i class="fa-solid fa-star text-theater-gold mt-1 text-sm" aria-hidden="true"></i>
+                                        <span>كل ليلة نام وأنت متخيل مشهد واحد بس من المسرحية.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- تذييل الصفحة (Footer) -->
-    <footer id="about" class="bg-black text-gray-400 py-10 text-center border-t border-gray-800">
+        <!-- ===== Masterclass Section ===== -->
+        <section id="masterclass" class="py-20 px-4 bg-gray-100">
+            <div class="container mx-auto">
+                <div class="text-center mb-16 reveal">
+                    <span class="bg-theater-dark text-theater-gold px-4 py-1 rounded-full text-sm font-bold tracking-wider mb-4 inline-block">للمحترفين واللي عايزين يبقوا كبار 👑</span>
+                    <h2 class="text-4xl md:text-5xl font-black mb-4 section-title block">أسرار الماستر كلاس 🏆</h2>
+                    <p class="text-xl text-gray-600 font-tajawal max-w-2xl mx-auto">هنا هنتكلم في التقيل.. إزاي تتعامل مع المواقف الصعبة وتفاصيل التفاصيل اللي بتفرق بين الممثل الهاوي والنجم!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <article class="bg-white p-8 rounded-2xl shadow-md border-r-4 border-theater-red hover:shadow-xl transition-shadow reveal">
+                        <h3 class="text-2xl font-bold mb-3 text-theater-dark flex items-center gap-2">
+                            <i class="fa-solid fa-bolt text-yellow-500" aria-hidden="true"></i> نسيت الكلام على المسرح؟ (الـ Blank)
+                        </h3>
+                        <p class="font-tajawal text-gray-700 mb-4 leading-relaxed">
+                            الكابوس الأكبر لأي ممثل! فجأة عقلك يوقف. الحل؟ <strong>إياك تخرج من الشخصية!</strong>
+                        </p>
+                        <ul class="list-disc list-inside text-gray-600 font-tajawal space-y-2">
+                            <li>استمر في الفعل (Action).. لو كنت بتشرب شاي كمل شرب بتركيز.</li>
+                            <li>اعتمد على زميلك، ممكن يرميلك كلمة (Cue) تفكرك.</li>
+                            <li>ارتجل في حدود الشخصية والموقف لحد ما تفتكر.</li>
+                        </ul>
+                    </article>
+
+                    <article class="bg-white p-8 rounded-2xl shadow-md border-r-4 border-theater-blue hover:shadow-xl transition-shadow reveal">
+                        <h3 class="text-2xl font-bold mb-3 text-theater-dark flex items-center gap-2">
+                            <i class="fa-solid fa-eye-slash text-gray-800" aria-hidden="true"></i> الحائط الرابع (The Fourth Wall)
+                        </h3>
+                        <p class="font-tajawal text-gray-700 mb-4 leading-relaxed">
+                            تخيل إن خشبة المسرح أوضة مقفولة من 3 حيطان، والجمهور بيبص عليك من الحيطة الرابعة الشفافة.
+                        </p>
+                        <div class="bg-blue-50 p-4 rounded-lg text-blue-900 font-tajawal text-sm border border-blue-100">
+                            <strong>امتى نكسره؟</strong> بعض المدارس المسرحية (زي بريخت) أو الكوميديا بتعتمد على "كسر الحائط الرابع" وإن الممثل يكلم الجمهور مباشرة عشان يورطهم في الحدث. لازم تعملها بوعي شديد!
+                        </div>
+                    </article>
+
+                    <article class="bg-white p-8 rounded-2xl shadow-md border-r-4 border-theater-gold hover:shadow-xl transition-shadow reveal">
+                        <h3 class="text-2xl font-bold mb-3 text-theater-dark flex items-center gap-2">
+                            <i class="fa-solid fa-masks-theater text-theater-gold" aria-hidden="true"></i> الكوميديا والتوقيت (Timing)
+                        </h3>
+                        <p class="font-tajawal text-gray-700 mb-4 leading-relaxed">
+                            إضحاك الناس أصعب من إبكائهم. السر كله في "التوقيت" أو الـ (Pause).
+                        </p>
+                        <p class="text-gray-600 font-tajawal">
+                            جملة عادية ممكن تبقى تموت من الضحك لو سكت ثانية واحدة بس قبل ما تقول الكلمة الأخيرة. التدريب على الإيقاع الداخلي للمشهد ومراقبة رد فعل الجمهور (الضحكة) هو مفتاح الكوميديان الناجح. ⏱️😂
+                        </p>
+                    </article>
+
+                    <article class="bg-white p-8 rounded-2xl shadow-md border-r-4 border-purple-500 hover:shadow-xl transition-shadow reveal">
+                        <h3 class="text-2xl font-bold mb-3 text-theater-dark flex items-center gap-2">
+                            <i class="fa-solid fa-fire text-orange-500" aria-hidden="true"></i> الذاكرة الانفعالية (Emotion Memory)
+                        </h3>
+                        <p class="font-tajawal text-gray-700 mb-4 leading-relaxed">
+                            إزاي تعيط بجد؟ ستانيسلافسكي قال إنك تستدعي موقف حقيقي حصلك في الماضي خلاك تحس بنفس الإحساس اللي الشخصية حاساه دلوقتي.
+                        </p>
+                        <p class="text-sm text-red-600 font-bold mt-2">
+                            ⚠️ تحذير: دي تقنية متقدمة جداً ومحتاجة تدريب عشان ما تأثرش على نفسية الممثل بعد العرض!
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Creators Section ===== -->
+        <section id="creators" class="py-24 px-4 bg-theater-dark text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-theater-red rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" aria-hidden="true"></div>
+            <div class="absolute bottom-0 left-0 w-80 h-80 bg-theater-blue rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;" aria-hidden="true"></div>
+
+            <div class="container mx-auto relative z-10">
+                <div class="text-center mb-20 reveal">
+                    <span class="bg-white/10 text-theater-gold px-6 py-2 rounded-full text-sm font-bold tracking-wider mb-6 inline-block backdrop-blur-sm border border-theater-gold/30">ما وراء الستارة العظيمة 🛠️</span>
+                    <h2 class="text-4xl md:text-6xl font-black mb-6 text-transparent bg-clip-text bg-gradient-to-r from-theater-gold to-yellow-200">صناع السحر (الجيش الخفي) 🪄</h2>
+                    <p class="text-xl md:text-2xl text-gray-300 font-tajawal max-w-4xl mx-auto leading-relaxed">
+                        المسرح مش بس ممثل بيقف يتكلم! ورا كل عرض عظيم، جيش من المبدعين بيبنوا العالم ده من الصفر. يلا نتعمق بالتفصيل الشديد في أسرار الإخراج، التأليف، الديكور، والغناء!
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+
+                    <article class="bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl border border-gray-700 hover:border-theater-blue transition-all group relative overflow-hidden reveal">
+                        <div class="absolute -right-4 -top-4 text-8xl opacity-10 group-hover:scale-110 transition-transform duration-500" aria-hidden="true">🎬</div>
+                        <h3 class="text-3xl font-black mb-6 text-theater-blue flex items-center gap-3">
+                            <i class="fa-solid fa-chair" aria-hidden="true"></i> الإخراج (رُبّان السفينة)
+                        </h3>
+                        <p class="text-gray-300 font-tajawal mb-6 text-lg">المخرج هو "المايسترو" اللي بيشوف العرض كامل في خياله قبل ما يبدأ. إزاي بيعمل ده؟</p>
+                        <ul class="space-y-4 font-tajawal text-gray-400">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-eye text-theater-gold mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">الرؤية الإخراجية (Director's Vision):</strong> النص مجرد كلمات، المخرج هو اللي بيحدد هتقدم إزاي؟ (هل هنقدم هاملت في العصور الوسطى ولا في شركة مودرن سنة 2024؟).</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-users text-theater-gold mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">الكاستينج (Casting):</strong> 80% من نجاح المخرج في اختياره للممثل الصح للدور الصح. كيميا الممثلين مع بعض بتصنع المعجزات.</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-chess-board text-theater-gold mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">الميزانسين (Mise-en-scène):</strong> التكوين البصري. المخرج بيرسم لوحة تشكيلية على المسرح. مين واقف فين؟ وليه؟ (وقوف ممثل في مستوى أعلى بيعطيه قوة وسيطرة درامية).</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-stopwatch text-theater-gold mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">ضبط الإيقاع (Pacing):</strong> الكوميديا محتاجة إيقاع سريع جداً (Ping-Pong)، والتراجيديا محتاجة فترات صمت (Pauses) عشان المشاعر توصل للجمهور.</div>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl border border-gray-700 hover:border-theater-gold transition-all group relative overflow-hidden reveal">
+                        <div class="absolute -left-4 -top-4 text-8xl opacity-10 group-hover:scale-110 transition-transform duration-500" aria-hidden="true">✍️</div>
+                        <h3 class="text-3xl font-black mb-6 text-theater-gold flex items-center gap-3">
+                            <i class="fa-solid fa-feather-pointed" aria-hidden="true"></i> التأليف (خالق العوالم)
+                        </h3>
+                        <p class="text-gray-300 font-tajawal mb-6 text-lg">كل حاجة بتبدأ من الورقة والقلم. الكاتب المسرحي مش بيكتب قصة تتقرأ، بيكتب "أفعال" تتشاف!</p>
+                        <ul class="space-y-4 font-tajawal text-gray-400">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-bolt text-theater-red mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">الصراع (Conflict):</strong> القاعدة الذهبية: مفيش صراع = مفيش مسرح! لازم بطل عايز حاجة بشدة (هدف)، وفي مانع قوي بيمنعه (عقبة).</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-chart-line text-theater-red mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">البناء الدرامي (Plot Arc):</strong> بداية (تعريف بالشخصيات)، تصاعد الأحداث (العقدة بتكبر)، الذروة (Climax - لحظة الانفجار والتوتر الأقصى)، ثم الحل (Resolution).</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-comments text-theater-red mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">الحوار الفعّال:</strong> في المسرح مفيش كلام للحشو. كل جملة لازم إما (تدفع القصة للأمام) أو (تكشف سر عن شخصية المتحدث). غير كده تتحذف فوراً!</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-book-open-reader text-theater-red mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">الإرشادات المسرحية (Stage Directions):</strong> الكاتب بيوصف المكان، الزمان، وحالة الشخصية بين الأقواس (يدخل غاضباً، يرمي الكوب).</div>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl border border-gray-700 hover:border-theater-red transition-all group relative overflow-hidden reveal">
+                        <div class="absolute -right-4 -bottom-4 text-8xl opacity-10 group-hover:scale-110 transition-transform duration-500" aria-hidden="true">🎨</div>
+                        <h3 class="text-3xl font-black mb-6 text-theater-red flex items-center gap-3">
+                            <i class="fa-solid fa-paint-roller" aria-hidden="true"></i> السينوغرافيا والديكور
+                        </h3>
+                        <p class="text-gray-300 font-tajawal mb-6 text-lg">تحويل الخشبة الفاضية لغابة سحرية، أو سجن مخيف، أو شقة بسيطة.. ده سحر مهندس الديكور والإضاءة!</p>
+                        <ul class="space-y-4 font-tajawal text-gray-400">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-hammer text-theater-blue mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">البيئة والزمن:</strong> الديكور بيجاوب على أسئلة المشاهد فوراً (إحنا فين؟ إحنا امتى؟ الشخصيات دي غنية ولا فقيرة؟) من خلال العفش والألوان.</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-palette text-theater-blue mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">سيكولوجية الألوان:</strong> الألوان بتتكلم! الأحمر للغضب والشغف، الأزرق للحزن والبرود، الألوان الداكنة للغموض. ديكور الحيطة نفسه بيمثل!</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-lightbulb text-theater-blue mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">الإضاءة (Lighting):</strong> الإضاءة هي أداة التوجيه السحرية. (سبوت لايت) واحد على ممثل في وسط الضلمة بيجبر كل الجمهور يبص عليه ويركز في كل همسة بيقولها.</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-layer-group text-theater-blue mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">تعدد المستويات:</strong> استخدام السلالم، المنصات، والبلكونات بيعطي عمق للمسرح ويسمح للمخرج بحركة الممثلين فوق وتحت بدل ما يمشوا في خط واحد.</div>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="bg-gray-900/80 backdrop-blur-md p-8 rounded-3xl border border-gray-700 hover:border-pink-500 transition-all group relative overflow-hidden reveal">
+                        <div class="absolute -left-4 -bottom-4 text-8xl opacity-10 group-hover:scale-110 transition-transform duration-500" aria-hidden="true">🎤</div>
+                        <h3 class="text-3xl font-black mb-6 text-pink-500 flex items-center gap-3">
+                            <i class="fa-solid fa-microphone-lines" aria-hidden="true"></i> الغناء والاستعراض
+                        </h3>
+                        <p class="text-gray-300 font-tajawal mb-6 text-lg">المسرح الغنائي (Musicals) هو أصعب وأمتع أنواع الفنون. الممثل هنا لازم يكون "وحش" في الـ Triple Threat (تمثيل، غناء، رقص)!</p>
+                        <ul class="space-y-4 font-tajawal text-gray-400">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-masks-theater text-theater-gold mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">تمثيل الأغنية (Acting the Song):</strong> أنت لا تغني لتطرب الجمهور فقط! أنت تغني لأن الكلام العادي لم يعد يكفي للتعبير عن المشاعر. الإحساس يسبق اللحن.</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-wind text-theater-gold mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">التنفس البطني (Diaphragm):</strong> سر قوة الصوت المسرحي! المغني بيتنفس من الحجاب الحاجز مش من صدره، عشان يقدر يغني جمل طويلة بصوت قوي وهو بيجري ويرقص.</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-shoe-prints text-theater-gold mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">الكوريوجرافي (Choreography):</strong> الرقصات والاستعراضات مش مجرد حركات عشوائية، دي لغة جسد جماعية بتكمل القصة وتبرز طاقة المشهد الغنائي.</div>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-ear-listen text-theater-gold mt-1" aria-hidden="true"></i>
+                                <div><strong class="text-white">مخارج الألفاظ (Articulation):</strong> أهم حاجة في أغاني المسرح إن الجمهور (يفهم) الكلمات وسط الموسيقى العالية. الحروف الساكنة لازم تُنطق بوضوح شديد زي طلقات الرصاص!</div>
+                            </li>
+                        </ul>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Kids Section ===== -->
+        <section id="kids" class="py-20 bg-blue-100 relative">
+            <div class="absolute inset-0 opacity-30" aria-hidden="true" style="background-image: radial-gradient(circle, #457b9d 1px, transparent 1px); background-size: 24px 24px;"></div>
+            <div class="container mx-auto px-4 relative z-10">
+                <div class="bg-white/85 backdrop-blur-md rounded-3xl p-8 md:p-12 shadow-2xl border-4 border-dashed border-blue-400 text-center reveal">
+
+                    <h2 class="text-4xl md:text-5xl font-black mb-6 text-blue-600 flex justify-center items-center gap-4 flex-wrap">
+                        <span class="emoji-float" aria-hidden="true">🧸</span> ركن الأبطال الصغار <span class="emoji-float" style="animation-delay: 0.5s;" aria-hidden="true">🎈</span>
+                    </h2>
+
+                    <p class="text-2xl font-tajawal font-bold text-gray-700 mb-8">
+                        نفسك تطلع على المسرح وتبقى سوبر هيرو؟ 🦸‍♀️🦸‍♂️
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 text-right">
+                        <article class="bg-pink-100 p-6 rounded-2xl border-2 border-pink-300 hover:scale-105 transition-transform">
+                            <h3 class="text-xl font-bold text-pink-600 mb-2">لعبة المراية 🪞</h3>
+                            <p class="font-tajawal text-gray-700">اقف قدام صاحبك، واحد يعمل حركة والتاني يقلده بالظبط كأنه مرايته! اللعبة دي بتعلمنا التركيز العالي.</p>
+                        </article>
+
+                        <article class="bg-yellow-100 p-6 rounded-2xl border-2 border-yellow-300 hover:scale-105 transition-transform">
+                            <h3 class="text-xl font-bold text-yellow-600 mb-2">تخيل إنك... 🐘</h3>
+                            <p class="font-tajawal text-gray-700">العبوا لعبة التحولات! تخيل إنك فيل تقيل، بعدين فراشة خفيفة، بعدين إنسان آلي! ده بيشغل الخيال والجسم.</p>
+                        </article>
+
+                        <article class="bg-green-100 p-6 rounded-2xl border-2 border-green-300 hover:scale-105 transition-transform">
+                            <h3 class="text-xl font-bold text-green-600 mb-2">العلبة السحرية 📦</h3>
+                            <p class="font-tajawal text-gray-700">مثل إن قدامك علبة، افتحها ببطء، وطلّع منها حاجة (مش موجودة بجد) وورينا رياكشنك! لقيت إيه؟ ثعبان ولا شيكولاتة؟</p>
+                        </article>
+                    </div>
+
+                    <div class="inline-block bg-blue-500 text-white font-bold py-3 px-8 rounded-full text-xl animate-bounce">
+                        التمثيل للأطفال هو أحلى "لعب بجد"! 😉
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== Fun Section ===== -->
+        <section id="fun" class="py-20 bg-theater-dark text-white">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl md:text-5xl font-black mb-12 text-yellow-400 reveal">فاصل نضحك! كوارث المسرح 😂🎭</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <article class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition-colors cursor-pointer group reveal">
+                        <div class="text-6xl mb-4 group-hover:scale-125 transition-transform" aria-hidden="true">👖</div>
+                        <h3 class="text-xl font-bold mb-2 text-theater-gold">بنطلون الملك!</h3>
+                        <p class="font-tajawal text-gray-300 text-sm">
+                            مرة ممثل بيعمل دور ملك عظيم، وهو بيدخل بكل هيبة على المسرح... بنطلونه اتقطع! عمل إيه؟ قعد على أقرب كرسي وقال للممثلين: "اقتربوا أيها الرعايا، الملك متعب اليوم ولا يستطيع الوقوف!" وأنقذ الموقف! 🤣
+                        </p>
+                    </article>
+
+                    <article class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition-colors cursor-pointer group reveal">
+                        <div class="text-6xl mb-4 group-hover:scale-125 transition-transform" aria-hidden="true">🚪</div>
+                        <h3 class="text-xl font-bold mb-2 text-theater-gold">الباب العنيد!</h3>
+                        <p class="font-tajawal text-gray-300 text-sm">
+                            المشهد: ممثل غضبان جداً المفروض يرزع الباب ويخرج. الممثل بيشد الباب.. الباب معلق مش بيفتح! بيشد أكتر.. مفيش فايدة. فجأة بصلهم وقال: "أنا هقعد معاكوا هنا عشان الجو بره وحش!" ونط من الشباك الديكور! 🪟🏃‍♂️
+                        </p>
+                    </article>
+
+                    <article class="bg-gray-800 p-6 rounded-xl hover:bg-gray-700 transition-colors cursor-pointer group reveal">
+                        <div class="text-6xl mb-4 group-hover:scale-125 transition-transform" aria-hidden="true">☎️</div>
+                        <h3 class="text-xl font-bold mb-2 text-theater-gold">تليفون من الماضي!</h3>
+                        <p class="font-tajawal text-gray-300 text-sm">
+                            مسرحية بتدور أحداثها في العصر الروماني (من 2000 سنة). فجأة.. موبايل حد من الجمهور رن بصوت عالي جداً! الممثل (الإمبراطور) بص للجمهور بكل ثقة وقال: "أيها الحراس، يبدو أن هناك اختراعاً شيطانياً يزعج الآلهة! اقطعوا رأس صاحبه!" صالة المسرح كلها ماتت من الضحك! 📱🏛️
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ===== Footer ===== -->
+    <footer class="bg-black text-gray-400 py-12 text-center border-t border-gray-800">
         <div class="container mx-auto px-4">
             <h3 class="text-2xl font-black text-white mb-4">وراء الكواليس 🎭</h3>
             <p class="font-tajawal max-w-lg mx-auto mb-6">
                 موقع اتعمل بحب لكل طفل بيحلم، وكل شاب بيعافر، وكل فنان كبير لسه بيتعلم. المسرح هو الحياة، والحياة أجمل واحنا بنمثل! ❤️
             </p>
             <div class="flex justify-center gap-6 text-2xl mb-8">
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-facebook"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-instagram"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-youtube"></i></a>
-                <a href="#" class="hover:text-white transition-colors"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" class="hover:text-white transition-colors" aria-label="فيسبوك"><i class="fa-brands fa-facebook" aria-hidden="true"></i></a>
+                <a href="#" class="hover:text-white transition-colors" aria-label="انستجرام"><i class="fa-brands fa-instagram" aria-hidden="true"></i></a>
+                <a href="#" class="hover:text-white transition-colors" aria-label="يوتيوب"><i class="fa-brands fa-youtube" aria-hidden="true"></i></a>
+                <a href="#" class="hover:text-white transition-colors" aria-label="تيك توك"><i class="fa-brands fa-tiktok" aria-hidden="true"></i></a>
             </div>
             <p class="text-sm font-tajawal">© 2026 جميع الحقوق محفوظة لعشاق المسرح ✨</p>
         </div>
     </footer>
 
-    <!-- زر الصعود لأعلى -->
-    <button id="scrollTopBtn" title="اطلع فوق"><i class="fa-solid fa-arrow-up"></i></button>
+    <!-- Scroll To Top -->
+    <button id="scrollTopBtn" title="اطلع فوق" aria-label="الصعود لأعلى الصفحة">
+        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+    </button>
 
-    <!-- سكربت الذكاء الاصطناعي (Gemini API) -->
-    <script>
-        const GEMINI_API_KEY = ""; // Canvas will automatically provide the key
-        const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${GEMINI_API_KEY}`;
-
-        // دالة مساعدة لعمل طلب للـ API مع Exponential Backoff (إعادة المحاولة عند الفشل)
-        async function fetchGemini(prompt, systemInstruction) {
-            const payload = {
-                contents: [{ parts: [{ text: prompt }] }],
-                systemInstruction: { parts: [{ text: systemInstruction }] }
-            };
-
-            let delay = 1000;
-            let retries = 3;
-
-            while (retries > 0) {
-                try {
-                    const response = await fetch(GEMINI_API_URL, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    if (!response.ok) {
-                        if (response.status === 429) {
-                            throw new Error("Rate limit exceeded");
-                        }
-                        throw new Error(`HTTP Error: ${response.status}`);
-                    }
-
-                    const result = await response.json();
-                    if (result.candidates && result.candidates.length > 0) {
-                        return result.candidates[0].content.parts[0].text;
-                    } else {
-                        throw new Error("Invalid response format");
-                    }
-                } catch (error) {
-                    console.warn(`Gemini API call failed, retrying in ${delay}ms...`, error);
-                    retries--;
-                    if (retries === 0) {
-                        return "عذراً يا فنان! 🎬 واجهنا مشكلة في الاتصال بالمخرج (الذكاء الاصطناعي). جرب تاني كمان شوية!";
-                    }
-                    await new Promise(res => setTimeout(res, delay));
-                    delay *= 2;
-                }
-            }
-        }
-
-        // --- 1. منطق مؤلف الشخصيات السحري ---
-        const charInput = document.getElementById('ai-char-input');
-        const charBtn = document.getElementById('ai-char-btn');
-        const charSpinner = document.getElementById('char-spinner');
-        const charOutput = document.getElementById('ai-char-output');
-
-        const charSystemPrompt = `
-        أنت كاتب مسرحي عبقري. سيقوم المستخدم بإعطائك فكرة مبدئية لشخصية.
-        المطلوب منك: بناء على هذه الفكرة، قم بتأليف ما يلي بأسلوب درامي أو كوميدي ممتع باللغة العربية:
-        1. تاريخ الشخصية (Backstory): ماضيه وكيف وصل لهذه الحالة.
-        2. الدافع الرئيسي (Motivation): ماذا يريد الآن وما هو هدفه؟
-        3. مونولوج قصير: مشهد مسرحي يتحدث فيه وحده (من 3 إلى 5 أسطر) يمكن للممثل التدرب عليه.
-        نسق الإجابة باستخدام علامات Markdown الجمالية واستخدم الإيموجي المناسبة.
-        `;
-
-        charBtn.addEventListener('click', async () => {
-            const prompt = charInput.value.trim();
-            if (!prompt) return;
-
-            // تغيير حالة الزر (Loading)
-            charBtn.disabled = true;
-            charSpinner.classList.remove('hidden');
-            charOutput.classList.add('hidden');
-
-            const responseText = await fetchGemini(`فكرة الشخصية: ${prompt}`, charSystemPrompt);
-
-            // تحويل Markdown بسيط إلى HTML (للعناوين والخط العريض)
-            let formattedText = responseText
-                .replace(/\*\*(.*?)\*\*/g, '<strong class="text-theater-gold">$1</strong>')
-                .replace(/\*(.*?)\*/g, '<em>$1</em>')
-                .replace(/\n/g, '<br>');
-
-            charOutput.innerHTML = formattedText;
-            charOutput.classList.remove('hidden');
-            charOutput.classList.add('animate__animated', 'animate__fadeIn');
-
-            // إرجاع حالة الزر
-            charBtn.disabled = false;
-            charSpinner.classList.add('hidden');
-        });
-
-        // --- 2. منطق شات المخرج الافتراضي ---
-        const chatInput = document.getElementById('ai-chat-input');
-        const chatBtn = document.getElementById('ai-chat-btn');
-        const chatBox = document.getElementById('chat-box');
-        const chatSendIcon = document.getElementById('chat-send-icon');
-        const chatSpinner = document.getElementById('chat-spinner');
-
-        const chatSystemPrompt = `
-        أنت مخرج مسرحي محترف، خبير، واسمك "المخرج الذكي". 
-        أنت تتحدث مع ممثلين (هواة أو محترفين) يطلبون نصيحتك في التمثيل، خشبة المسرح، الأداء الصوتي، أو التغلب على التوتر.
-        قدم إجابات عملية، قصيرة (فقرة أو فقرتين)، مشجعة ومحفزة جداً.
-        تحدث باللهجة المصرية المفهومة أو العربية الفصحى البسيطة، واستخدم إيموجي تعبر عن المسرح والمشاعر.
-        `;
-
-        function addMessage(text, isUser = false) {
-            const msgDiv = document.createElement('div');
-            msgDiv.className = `flex gap-3 items-start ${isUser ? 'flex-row-reverse' : ''} animate__animated animate__fadeInUp animate__faster`;
-            
-            const avatar = document.createElement('div');
-            avatar.className = `w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-xl ${isUser ? 'bg-theater-gold' : 'bg-theater-blue'}`;
-            avatar.textContent = isUser ? '👤' : '🎬';
-
-            const bubble = document.createElement('div');
-            bubble.className = `p-3 rounded-2xl text-white font-tajawal text-sm ${
-                isUser 
-                ? 'bg-theater-gold/20 border border-theater-gold/30 rounded-tl-none' 
-                : 'bg-theater-blue/20 border border-theater-blue/30 rounded-tr-none'
-            }`;
-            // Simple markdown parsing for bold text
-            bubble.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
-
-            msgDiv.appendChild(avatar);
-            msgDiv.appendChild(bubble);
-            chatBox.appendChild(msgDiv);
-            
-            // التمرير لأسفل المحادثة
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-
-        async function handleChatSend() {
-            const msg = chatInput.value.trim();
-            if (!msg) return;
-
-            // 1. إضافة رسالة المستخدم
-            addMessage(msg, true);
-            chatInput.value = '';
-
-            // 2. حالة التحميل
-            chatInput.disabled = true;
-            chatBtn.disabled = true;
-            chatSendIcon.classList.add('hidden');
-            chatSpinner.classList.remove('hidden');
-
-            // 3. جلب الرد من Gemini
-            const responseText = await fetchGemini(msg, chatSystemPrompt);
-
-            // 4. إضافة رد الذكاء الاصطناعي
-            addMessage(responseText, false);
-
-            // 5. إنهاء حالة التحميل
-            chatInput.disabled = false;
-            chatBtn.disabled = false;
-            chatSendIcon.classList.remove('hidden');
-            chatSpinner.classList.add('hidden');
-            chatInput.focus();
-        }
-
-        chatBtn.addEventListener('click', handleChatSend);
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') handleChatSend();
-        });
-
-    </script>
-
-    <!-- سكربت التفاعلات -->
+    <!-- ===== App Script ===== -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            
-            // 1. منطق الستارة الافتتاحية (Intro Curtain)
+            // ===== 1. Intro Curtain =====
             const openCurtainBtn = document.getElementById('openCurtainBtn');
             const introCurtain = document.getElementById('intro-curtain');
-            
-            openCurtainBtn.addEventListener('click', () => {
+
+            function openCurtain() {
                 introCurtain.classList.add('curtain-open');
-                
-                // إخفاء الستارة تماماً بعد انتهاء الحركة عشان ماتمنعش الضغط على الموقع
                 setTimeout(() => {
                     introCurtain.style.display = 'none';
-                    // إضافة حركة لظهور محتوى الموقع
                     document.body.classList.add('animate__animated', 'animate__fadeIn');
-                }, 2000); // نفس مدة الـ transition في CSS
+                    // Focus management for a11y
+                    document.querySelector('main').setAttribute('tabindex', '-1');
+                    document.querySelector('main').focus({ preventScroll: true });
+                }, 2000);
+            }
+
+            openCurtainBtn.addEventListener('click', openCurtain);
+
+            // Allow opening with Enter or Space key
+            openCurtainBtn.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openCurtain();
+                }
             });
 
-            // 2. قائمة الموبايل
+            // ===== 2. Mobile Menu =====
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
+            const mobileMenuIcon = mobileMenuBtn.querySelector('i');
 
             mobileMenuBtn.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
+                const isOpen = mobileMenu.classList.toggle('open');
+                mobileMenuBtn.setAttribute('aria-expanded', isOpen);
+                mobileMenuIcon.classList.toggle('fa-bars', !isOpen);
+                mobileMenuIcon.classList.toggle('fa-xmark', isOpen);
             });
 
-            // إخفاء قائمة الموبايل عند الضغط على أي رابط
-            const mobileLinks = mobileMenu.querySelectorAll('a');
-            mobileLinks.forEach(link => {
+            mobileMenu.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
+                    mobileMenu.classList.remove('open');
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    mobileMenuIcon.classList.add('fa-bars');
+                    mobileMenuIcon.classList.remove('fa-xmark');
                 });
             });
 
-            // 3. زر الصعود لأعلى
+            // ===== 3. Scroll To Top Button + Scroll Progress + Active Nav =====
             const scrollTopBtn = document.getElementById("scrollTopBtn");
+            const scrollProgress = document.getElementById('scroll-progress');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const sections = document.querySelectorAll('main section[id]');
 
-            window.onscroll = function() {
-                if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+            function onScroll() {
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrollPercent = (scrollTop / docHeight) * 100;
+
+                // Progress bar
+                scrollProgress.style.width = scrollPercent + '%';
+
+                // Scroll-to-top button
+                if (scrollTop > 300) {
                     scrollTopBtn.style.display = "block";
-                    scrollTopBtn.classList.add('animate__animated', 'animate__fadeIn');
                 } else {
                     scrollTopBtn.style.display = "none";
-                    scrollTopBtn.classList.remove('animate__animated', 'animate__fadeIn');
                 }
-            };
+
+                // Active nav link
+                let currentId = '';
+                sections.forEach(section => {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top <= 120 && rect.bottom >= 120) {
+                        currentId = section.getAttribute('id');
+                    }
+                });
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.getAttribute('href') === '#' + currentId);
+                });
+            }
+
+            window.addEventListener('scroll', onScroll, { passive: true });
+            onScroll();
 
             scrollTopBtn.addEventListener('click', () => {
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
+
+            // ===== 4. Reveal on Scroll (IntersectionObserver) =====
+            const revealElements = document.querySelectorAll('.reveal');
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+
+                revealElements.forEach(el => observer.observe(el));
+            } else {
+                // Fallback for very old browsers
+                revealElements.forEach(el => el.classList.add('visible'));
+            }
         });
     </script>
 </body>
